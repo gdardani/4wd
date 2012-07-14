@@ -2,7 +2,8 @@
 
 ## Iface para comunicacao serial com Arduino board
 ## gdardani - giovanidardani at gmail.com
-## Version: 0.1 - 10/07/2012
+## Python 2.7.3
+## Version: 0.2 - 10/07/2012
 
 import serial
 import time
@@ -20,7 +21,8 @@ command = {
  's': 'backwd',
  'a': 'left',
  'd': 'right',
- 'e': 'exit'
+ 'e': 'exit',
+ 'h': 'help'
 }
 
 try:
@@ -52,6 +54,10 @@ while 1:
    print "Falha ao enviar comando STOP, conexao encerrada".format(err)
    exit (1)
 
+
+ if (cmd == 'h'):
+  for key in command:
+   print "{0} -- {1}".format(key,command[key])
 
  try:
   bot0.write(cmd)
