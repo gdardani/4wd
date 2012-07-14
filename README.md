@@ -1,4 +1,4 @@
-4wd
+4wd - Platform
 ===
 
-4WD platform + Arduino
+4wd Platform + arduino + MotorShield
