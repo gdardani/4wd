@@ -5,7 +5,7 @@
 #define D_4WD_H
 
 #define MIN 50
-#define MAX 100
+#define MAX 230
 #define SERIAL_SPEED 9600
 
 #endif
