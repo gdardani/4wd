@@ -3,7 +3,7 @@
 ## Iface para comunicacao serial com Arduino board
 ## gdardani - giovanidardani at gmail.com
 ## Python 2.7.3
-## Version: 0.2 - 10/07/2012
+## Version: 0.3 - 10/07/2012
 
 import serial
 import time
