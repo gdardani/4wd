@@ -3,16 +3,39 @@
 ## Iface para comunicacao serial com Arduino board
 ## gdardani - giovanidardani at gmail.com
 ## Python 2.7.3
-## Version: 0.3 - 10/07/2012
+## Version: 0.4 - 10/07/2012
 
 import serial
 import time
 import sys
+import re
 
 ## Serial port
 serPort = '/dev/ttyACM0'
 rateLimit = '9600'
 timeOut = 3
+
+########################################################
+## Abre con serial
+########################################################
+
+def openSerialConn (serPort, rateLimit, timeOut):
+
+ try:
+  bot0 = serial.Serial(serPort, rateLimit, timeout=timeOut)
+  time.sleep(2)
+  msg = bot0.readline()
+  if (msg):
+   print "Device says: {0}".format(msg)
+   return bot0
+ 
+ except Exception as err:
+  print "Falha conn porta serial: {0}".format(err)
+  exit (1)
+
+########################################################
+## Le comando da porta serial, valida e envia cmd
+########################################################
 
 ## Comandos conhecidos
 command = {
@@ -22,45 +45,52 @@ command = {
  'a': 'left',
  'd': 'right',
  'e': 'exit',
- 'h': 'help'
+ 'h': 'help',
+ 'c': 'set speed',
 }
 
-try:
- # abre conn serial e espera ate estar estabelecida (~ 2s)
- bot0 = serial.Serial(serPort, rateLimit, timeout=timeOut)
- time.sleep(2)
- msg = bot0.readline()
- if (msg):
-  print "Device says: {0}".format(msg)
- 
-except Exception as err:
- print "Falha conn porta serial: {0}".format(err)
- exit (1)
+def RunCmd(sconn):
 
-while 1:
+ ## Le input do teclado
  cmd = raw_input('cmd# ')
 
+ ## valida comando
  if (cmd not in command):
   print "Comando '{0}' nao encontrado".format(cmd)
-  continue
 
+ ## Exit
  if (cmd == 'e'):
   try:
-   bot0.write('q')
+   sconn.write('q')
    print "Bye"
-   break
+   exit (1)
 
   except Exception as err:
    print "Falha ao enviar comando STOP, conexao encerrada".format(err)
    exit (1)
 
-
+ ## Help
  if (cmd == 'h'):
   for key in command:
    print "{0} -- {1}".format(key,command[key])
 
+ ## Envia comando
  try:
-  bot0.write(cmd)
+  sconn.write(cmd)
 
  except Exception as err:
   print "Falha ao enviar comando: {0} -- {1}".format(command[cmd],err)
+
+
+
+########################################################
+## Main
+########################################################
+
+if __name__ == "__main__":
+
+ sConn = openSerialConn(serPort, rateLimit, timeOut)
+ if (sConn):
+  while 1:
+   RunCmd(sConn)
+
