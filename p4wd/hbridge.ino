@@ -33,8 +33,6 @@ void Hbridge::forward(int a, int b)
   if(last_dir == DFORWARD)
     return;
 
-  last_dir = DFORWARD;
-
   digitalWrite(en1, LOW);
   digitalWrite(en2, HIGH);
 
@@ -42,6 +40,7 @@ void Hbridge::forward(int a, int b)
   digitalWrite(en4, LOW);
 
   speed(a, b);
+  last_dir = DFORWARD;
 }
 
 // move backward
@@ -49,9 +48,7 @@ void Hbridge::backward(int a, int b)
 {
   if(last_dir == DBACKWARD)
     return;
-
-  last_dir = DBACKWARD;
-
+    
   digitalWrite(en1, HIGH);
   digitalWrite(en2, LOW);
 
@@ -59,19 +56,22 @@ void Hbridge::backward(int a, int b)
   digitalWrite(en4, HIGH);
 
   speed(a, b);
+  last_dir = DBACKWARD;
 }
+
 // turn left
 void Hbridge::left(int a, int b)
 {
-  
+  if(last_dir == DLEFT)
+    return;
+    
   digitalWrite(en1, HIGH);
   digitalWrite(en2, LOW);
   
   digitalWrite(en3, HIGH);
   digitalWrite(en4, LOW);
   
-  speed(a, b);
-  
+  speed(a, b); 
   last_dir = DLEFT;
 }
 
@@ -82,8 +82,6 @@ void Hbridge::right(int a, int b)
     if(last_dir == DRIGHT)
      return;
 
-    last_dir = DRIGHT;
-
     digitalWrite(en1, LOW);
     digitalWrite(en2, HIGH);
 
@@ -91,16 +89,15 @@ void Hbridge::right(int a, int b)
     digitalWrite(en4, HIGH);
     
     speed(a, b);
+    last_dir = DRIGHT;
 }
 
 // stop motors
 void Hbridge::stop()
 {
 
-  if(last_dir == DRIGHT)
-     return;
-
-  last_dir = DSTOP;
+  if(last_dir == DSTOP)
+     return
 
   digitalWrite(en1, LOW);
   digitalWrite(en2, LOW);
@@ -108,8 +105,8 @@ void Hbridge::stop()
   digitalWrite(en3, LOW);
   digitalWrite(en4, LOW);
 
-  analogWrite(ena, 0);
-  analogWrite(enb, 0);
+  speed(0,0);
+  last_dir = DSTOP;
 }
 
 // speed direction of motors
