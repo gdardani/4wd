@@ -12,7 +12,7 @@
 #define ENA 10
 #define ENB 11
 
-#define SPEED 160
+#define SPEED 220
 
 Hbridge hbridge(EN1, EN2, EN3, EN4, ENA, ENB);
 
