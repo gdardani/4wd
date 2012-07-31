@@ -60,6 +60,5 @@ void loop()
 { 
   int cmd = serial_read();
   Run_Cmd(cmd);
-  //delay(100);
 }
 
