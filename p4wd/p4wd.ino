@@ -12,7 +12,7 @@
 #define ENA 10
 #define ENB 11
 
-#define SPEED 220
+#define SPEED 150
 
 Hbridge hbridge(EN1, EN2, EN3, EN4, ENA, ENB);
 
@@ -50,7 +50,7 @@ void Run_Cmd(int cmd) {
   
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(SERIAL_SPEED);
   Serial.print("ON --> Running at speed: ");
   Serial.println(SPEED);
   hbridge.stop();
@@ -59,6 +59,8 @@ void setup()
 void loop()
 { 
   int cmd = serial_read();
+  Serial.println(cmd);
+  delay(200);
   Run_Cmd(cmd);
 }
 

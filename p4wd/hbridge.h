@@ -29,10 +29,9 @@ class Hbridge
     void backward(int, int);
     void left(int, int);
     void right(int, int);
+    void setspeed(int);
     void stop(void);
     boolean speed(int, int);
-    void speed_min(int);
-    void speed_max(int);
 };
 
 #endif

@@ -117,4 +117,11 @@ boolean Hbridge::speed(int a, int b) {
 
   return true;
 }
+
+void Hbridge::setspeed(int newspeed) {
+
+  stop();
+  analogWrite(ena, newspeed);
+  analogWrite(enb, newspeed);
+}
  
