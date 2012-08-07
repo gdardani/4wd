@@ -23,16 +23,19 @@ def openSerialConn (serPort, rateLimit, timeOut):
 
  try:
   bot0 = serial.Serial(serPort, rateLimit, timeout=timeOut)
-  time.sleep(2)
-  msg = bot0.readline()
-  if (msg):
-   print "Device says: {0}".format(msg)
-   return bot0
- 
+  time.sleep(3);
+
  except Exception as err:
   print "Falha conn porta serial: {0}".format(err)
   exit (1)
 
+ msg = bot0.readline()
+
+ if (msg):
+  print "Device says: {0}".format(msg)
+
+ return bot0
+ 
 ########################################################
 ## Le comando da porta serial, valida e envia cmd
 ########################################################

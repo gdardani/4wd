@@ -1,7 +1,8 @@
-## Iface para comunicacao wifi com Arduino board
-## gdardani - giovanidardani at gmail.com
-## Python 2.7.3
-## Version: 0.1 - 31/07/2012
+/* Iface para comunicacao wifi com Arduino board
+ gdardani - giovanidardani at gmail.com
+ Python 2.7.3
+ Version: 0.1 - 31/07/2012
+*/
 
 #include <WiServer.h>
  
@@ -30,26 +31,49 @@ prog_uchar wep_keys[] PROGMEM = { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08
 // infrastructure - connect to AP
 // adhoc - connect to another WiFi device
 unsigned char wireless_mode = WIRELESS_MODE_INFRA;
-unsigned int  sensorValue;
 unsigned char ssid_len;
 unsigned char security_passphrase_len;
-// End of wireless configuration parameters ----------------------------------------
+
  
 int counter;
 // This is our page serving function that generates web pages
 boolean sendMyPage(char* URL) {
  
     // Check if the requested URL matches "/"
-    if (strcmp(URL, "/cmd") == 0) {
-        // Use WiServer's print and println functions to write out the page content
-        WiServer.print("<html>");
- 
-        // Instruct the web broweser to refersh every 10 seconds 
-        WiServer.print("<head><meta http-equiv=\"refresh\" content=\"10\"> </head>"); 
-        WiServer.println("<H1>WifiBee Connected...<H1>");
-        WiServer.print("<H2>Sensor Value = ");
-        WiServer.print(sensorValue);  //A2 is connected to an exernal sensor. The RAW value is send to the client.
-        WiServer.print("</H2></html>");
+    if (strcmp(URL, "/w") == 0) {
+        WiServer.print(URL);
+        Serial.println('119');
+        //WiServer.print('0');
+        return true;
+    }
+    if (strcmp(URL, "/s") == 0) {
+        WiServer.print(URL);
+        Serial.println('s');
+        WiServer.print('0');
+        return true;
+    }
+    if (strcmp(URL, "/a") == 0) {
+        WiServer.print(URL);
+        Serial.println('a');
+        WiServer.print('0');
+        return true;
+    }
+    if (strcmp(URL, "/d") == 0) {
+        WiServer.print(URL);
+        Serial.println('d');
+        WiServer.print('0');
+        return true;
+    }
+    if (strcmp(URL, "/q") == 0) {
+        WiServer.print(URL);
+        Serial.println('q');
+        WiServer.print('0');
+        return true;
+    }
+    if (strcmp(URL, "/e") == 0) {
+        WiServer.print(URL);
+        Serial.println('e');
+        WiServer.print('0');
         return true;
     }
     // URL not found
@@ -62,13 +86,11 @@ void setup() {
   WiServer.init(sendMyPage);
  
   // Enable Serial output and ask WiServer to generate log messages (optional)
-  Serial.begin(57600);
+  Serial.begin(9600);
   WiServer.enableVerboseMode(true);
 }
  
 void loop(){
-  sensorValue = analogRead(A2);  //A2 is connected to an exernal sensor via Grove interface in Grove - XBee Carrier .
-  // Run WiServer
   WiServer.server_task();
   delay(10);
 }

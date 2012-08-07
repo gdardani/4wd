@@ -65,11 +65,11 @@ void Hbridge::left(int a, int b)
   if(last_dir == DLEFT)
     return;
     
-  digitalWrite(en1, HIGH);
-  digitalWrite(en2, LOW);
+  digitalWrite(en1, LOW);
+  digitalWrite(en2, HIGH);
   
-  digitalWrite(en3, HIGH);
-  digitalWrite(en4, LOW);
+  digitalWrite(en3, LOW);
+  digitalWrite(en4, HIGH);
   
   speed(a, b); 
   last_dir = DLEFT;
@@ -82,11 +82,11 @@ void Hbridge::right(int a, int b)
     if(last_dir == DRIGHT)
      return;
 
-    digitalWrite(en1, LOW);
-    digitalWrite(en2, HIGH);
+    digitalWrite(en1, HIGH);
+    digitalWrite(en2, LOW);
 
-    digitalWrite(en3, LOW);
-    digitalWrite(en4, HIGH);
+    digitalWrite(en3, HIGH);
+    digitalWrite(en4, LOW);
     
     speed(a, b);
     last_dir = DRIGHT;
@@ -118,10 +118,17 @@ boolean Hbridge::speed(int a, int b) {
   return true;
 }
 
-void Hbridge::setspeed(int newspeed) {
+boolean Hbridge::setspeed(int newspeed) {
 
   stop();
-  analogWrite(ena, newspeed);
-  analogWrite(enb, newspeed);
+  //
+  if (newspeed > HB_SPEED_MAX)
+   #define SPEED HB_SPEED_MAX
+   
+  if (newspeed < HB_SPEED_MIN)
+   #define SPEED HB_SPEED_MIN
+   
+  #define SPEED newspeed
+  return true;
 }
  
