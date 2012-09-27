@@ -1,4 +1,4 @@
 4wd - Platform
 ===
 
-4wd Platform + RLarduino + MotorShield MotoMama - versao 1.1
+4wd Platform + RLarduino + MotorShield MotoMama + Xbee + Python Serial Interface - versao 1.2
