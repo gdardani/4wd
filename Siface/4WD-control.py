@@ -3,16 +3,31 @@
 ## Iface para comunicacao serial com Arduino board
 ## gdardani - giovanidardani at gmail.com
 ## Python 2.7.3
-## Version: 0.4 - 10/07/2012
+## Version: 0.5 - 19/10/2012
 
 import serial
 import time
 import sys
 import re
+from optparse import OptionParser
+
+########################################################
+## cli parser
+########################################################
+
+usage = (
+        "Usage: %prog --d <device> -s <speed>"
+)
+
+cparser = OptionParser(usage=usage, version="%prog 0.5")
+cparser.add_option("--d", "--device", action="store", type="str", dest="device", help="Serial device - ex: /dev/ttyUSB0", default='/dev/ttyUSB0')
+cparser.add_option("--s", "--speed", action="store", type="str", dest="speed", help="Serial Speed ex: 9600", default='9600')
+opts, args = cparser.parse_args()
+
 
 ## Serial port
-serPort = '/dev/ttyACM0'
-rateLimit = '9600'
+serPort = opts.device
+rateLimit = opts.speed
 timeOut = 3
 
 ########################################################
@@ -60,6 +75,7 @@ def RunCmd(sconn):
  ## valida comando
  if (cmd not in command):
   print "Comando '{0}' nao encontrado".format(cmd)
+  sconn.write('q')
 
  ## Exit
  if (cmd == 'e'):
