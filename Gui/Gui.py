@@ -1,9 +1,9 @@
 #!/usr/bin/python
 
-## Iface para comunicacao serial com Arduino board
+## Gui para comunicacao serial com Arduino board
 ## gdardani - giovanidardani at gmail.com
 ## Python 2.7.3
-## Version: 0.1
+## Version: 0.2
 
 import pygtk
 pygtk.require('2.0')
@@ -37,50 +37,68 @@ timeOut = '3'
 class sendCmd:
 
  def __init__(self):
+
   try:
    self.bot = serial.Serial(serPort, rateLimit)
-   #self.bot = serial.Serial(serPort, rateLimit, timeOut)
    time.sleep(3);
    
   except Exception as err:
    print "Falha conn porta serial: {0}".format(err)
 
- def fwd(self, bla, bla1):
+ def set_mov(self, mov):
   try:
-   self.bot.write('w')
+   self.bot.write(mov)
   except Exception as err:
    print "Falha enviar comando: {0}".format(err)
-
- def stop(self, bla, bla1):
-  try:
-   self.bot.write('q')
-  except Exception as err:
-   print "Falha enviar comando: {0}".format(err)
-
+ 
 class Application:
 
- def frente(self, widget, data=None):
-  self.button1.connect("clicked", self.conn.fwd, None)
+ def setmov_callback(self, mov, foo):
+  self.conn.set_mov(mov)
 
- def tras(self, widget, data=None):
-  self.button2.connect("clicked", self.conn.stop, None)
+ def delete_event(self, widget, event, data=None):
+  gtk.main_quit()
+  return False
 
  def __init__(self):
   self.conn = sendCmd()
-  self.window1 = gtk.Window(gtk.WINDOW_TOPLEVEL)
-  self.window2 = gtk.Window(gtk.WINDOW_TOPLEVEL)
-  self.button1 = gtk.Button(label="f")
-  self.button2 = gtk.Button(label="s")
-  self.button1.connect("clicked", self.frente, None)
-  self.button2.connect("clicked", self.tras, None)
-  self.window1.add(self.button1)
-  self.window2.add(self.button2)
-  
+  self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+  self.window.set_title("4WD - Gui ")
+  self.window.connect("delete_event", self.delete_event)
+  self.window.set_border_width(20)
+ 
+  self.box = gtk.VBox(False, 0)
+  self.window.add(self.box)
+
+  self.button1 = gtk.Button("FORWARD")
+  self.button2 = gtk.Button("BACKWARD")
+  self.button3 = gtk.Button("LEFT")
+  self.button4 = gtk.Button("RIGHT")
+
+  self.button1.connect_object("button_press_event", self.setmov_callback, "w")
+  self.button1.connect_object("button_release_event", self.setmov_callback, "q")
+
+  self.button2.connect_object("button_press_event", self.setmov_callback, "s")
+  self.button2.connect_object("button_release_event", self.setmov_callback, "q")
+
+  self.button3.connect_object("button_press_event", self.setmov_callback, "a")
+  self.button3.connect_object("button_release_event", self.setmov_callback, "q")
+
+  self.button4.connect_object("button_press_event", self.setmov_callback, "d")
+  self.button4.connect_object("button_release_event", self.setmov_callback, 'q')
+
+  self.box.pack_start(self.button1, True, True, 0)
+  self.box.pack_start(self.button2, True, True, 0)
+  self.box.pack_start(self.button3, True, True, 0)
+  self.box.pack_start(self.button4, True, True, 0)
+
   self.button1.show()
   self.button2.show()
-  self.window1.show()
-  self.window2.show()
+  self.button3.show()
+  self.button4.show()
 
+  self.box.show()
+  self.window.show()
 
  def main(self):
   gtk.main()
