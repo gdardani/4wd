@@ -44,6 +44,7 @@ class sendCmd:
    
   except Exception as err:
    print "Falha conn porta serial: {0}".format(err)
+   exit (1)
 
  def set_mov(self, mov):
   try:
