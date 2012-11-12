@@ -63,6 +63,7 @@ class Application:
   else:
    self.cmd = widget
  
+  print self.cmd
   self.conn.set_mov(self.cmd)
 
  def delete_event(self, widget, event, data=None):
