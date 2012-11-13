@@ -50,8 +50,6 @@ void Run_Cmd(int cmd) {
 void setup()
 {
   Serial.begin(SERIAL_SPEED);
-  //Serial.print("ON --> Running at speed: ");
-  //Serial.println(SPEED);
   hbridge.stop();
 }
 
@@ -59,7 +57,4 @@ void loop()
 { 
   int cmd = serial_read();
   Run_Cmd(cmd);
-  //Serial.println(cmd);
-  //Serial.println(SPEED);
-  delay(200);
 }
