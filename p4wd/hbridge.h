@@ -29,7 +29,7 @@ class Hbridge
     #define HB_SPEED_MIN 60
     #define HB_SPEED_MAX 220
     // default engines speed
-    #define SPEED 120
+    #define SPEED 220
 };
 
 #endif
