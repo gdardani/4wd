@@ -18,7 +18,7 @@ Hbridge::Hbridge(
   en4 = _en4;
   ena = _ena;
   enb = _enb;
-
+   
   pinMode(en1, OUTPUT);
   pinMode(en2, OUTPUT);
   pinMode(en3, OUTPUT);
@@ -118,17 +118,23 @@ boolean Hbridge::speed(int a, int b) {
   return true;
 }
 
-boolean Hbridge::setspeed(int newspeed) {
+boolean Hbridge::setspeed(int cmd) {
 
-  stop();
-  //
-  if (newspeed > HB_SPEED_MAX)
-   #define SPEED HB_SPEED_MAX
+  if (cmd == 0){
+     tmpSPEED = SPEED + SPEED_STEP;
+     SPEED = tmpSPEED;
+  } else if (cmd == 1) {
+    tmpSPEED = SPEED - SPEED_STEP;
+     SPEED = tmpSPEED;
+  } else { return false; };
    
-  if (newspeed < HB_SPEED_MIN)
-   #define SPEED HB_SPEED_MIN
-   
-  #define SPEED newspeed
-  return true;
+  // SPEED limits validation
+  if (SPEED > HB_SPEED_MAX){
+   SPEED = HB_SPEED_MAX;
+  } else if (SPEED < HB_SPEED_MIN) {
+    SPEED = HB_SPEED_MIN;
+  }
+  tmpSPEED=0; 
+  return SPEED;
 }
  

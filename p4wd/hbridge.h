@@ -25,11 +25,6 @@ class Hbridge
     boolean setspeed(int);
     void stop(void);
     boolean speed(int, int);
-    //min and max engines speed
-    #define HB_SPEED_MIN 60
-    #define HB_SPEED_MAX 220
-    // default engines speed
-    #define SPEED 220
 };
 
 #endif
