@@ -71,6 +71,7 @@ class Application:
 
  def __init__(self):
   self.conn = sendCmd()
+  self.cmd = 'q'
   self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
   self.window.set_position(gtk.WIN_POS_CENTER)
   self.window.set_title("4WD - Gui ")
@@ -78,6 +79,12 @@ class Application:
   self.window.set_border_width(40)
   self.window.connect_object("key_press_event", self.on_key_press_event, None)
   self.window.connect_object("key_release_event", self.on_key_press_event, "q")
+  self.label = gtk.Label(self.cmd)
+  self.label.set_alignment(0, 0)
+  self.box = gtk.VBox(False, 0)
+  self.box.pack_start(self.label, False, False, 0)
+  self.label.show()
+  self.box.show()
   self.window.show()
 
  def main(self):
