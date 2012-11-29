@@ -38,8 +38,9 @@ class sendCmd:
 
  def __init__(self):
 
-  movs = {'w', 's', 'a', 'd'}
- 
+  global movs
+  movs = {'w': 'w', 's': 's', 'a':'a', 'd':'d','q': 'q', 'Page_Down': 'x','Page_Up': 'z'}
+
   try:
    ##time out nao funciona
    self.bot = serial.Serial(serPort, rateLimit)
@@ -51,9 +52,14 @@ class sendCmd:
 
  def set_mov(self, mov):
   try:
-   self.bot.write(mov)
+   if mov not in movs:
+    return False
+
+   self.bot.write(movs[mov])
   except Exception as err:
    print "Falha enviar comando: {0}".format(err)
+
+  return True
  
 class Application:
 
