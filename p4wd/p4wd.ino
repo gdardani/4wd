@@ -13,14 +13,13 @@
 #define ENA 10
 #define ENB 11
 //min and max engines speed
-int HB_SPEED_MIN = 60;
+int HB_SPEED_MIN = 80;
 int HB_SPEED_MAX = 220;
 // default engines speed
-int SPEED = 60;
+int SPEED = 80;
 // increase and deecrease speed
 int SPEED_STEP = 20;
-int tmpSPEED;
-int vel;
+
 
 Hbridge hbridge(EN1, EN2, EN3, EN4, ENA, ENB);
 
@@ -55,14 +54,12 @@ void Run_Cmd(int cmd) {
      
    //seep up (z) 
     case 122:
-     vel = hbridge.setspeed(0);
-     Serial.println(vel);
+     hbridge.setspeed(0);
      break;
 
     // seed down(x)     
     case 120:
-     vel = hbridge.setspeed(1);
-     Serial.println(vel);
+     hbridge.setspeed(1);
      break;
   };
 };

@@ -38,8 +38,10 @@ class sendCmd:
 
  def __init__(self):
 
-  global movs
-  movs = {'w': 'w', 's': 's', 'a':'a', 'd':'d','q': 'q', 'Page_Down': 'x','Page_Up': 'z'}
+  global bodyctl
+  global speedctl
+  bodyctl = {'w': 'w', 's': 's', 'a':'a', 'd':'d','q': 'q'} 
+  speedctl = {'Page_Down': 'x','Page_Up': 'z'}
 
   try:
    ##time out nao funciona
@@ -52,24 +54,27 @@ class sendCmd:
 
  def set_mov(self, mov):
   try:
-   if mov not in movs:
-    return False
+   if mov in bodyctl:
+    self.bot.write(bodyctl[mov])
 
-   self.bot.write(movs[mov])
+   if mov in speedctl:
+    self.bot.write(speedctl[mov])
+    
+  # return True
   except Exception as err:
    print "Falha enviar comando: {0}".format(err)
 
-  return True
+  return False
  
 class Application:
 
  def on_key_press_event(self, widget, event):
-  if widget:
-   self.cmd = widget
-  else:
-   self.cmd = gtk.gdk.keyval_name(event.keyval)
- 
+  self.cmd = gtk.gdk.keyval_name(event.keyval)
   self.conn.set_mov(self.cmd)
+  self.last_cmd = self.cmd
+
+ def on_key_release_event(self, widget, event):
+  self.conn.set_mov('q')
 
  def delete_event(self, widget, event, data=None):
   gtk.main_quit()
@@ -84,7 +89,7 @@ class Application:
   self.window.connect("delete_event", self.delete_event)
   self.window.set_border_width(40)
   self.window.connect_object("key_press_event", self.on_key_press_event, None)
-  self.window.connect_object("key_release_event", self.on_key_press_event, "q")
+  self.window.connect_object("key_release_event", self.on_key_release_event, None)
   self.label = gtk.Label(self.cmd)
   self.label.set_alignment(0, 0)
   self.box = gtk.VBox(False, 0)

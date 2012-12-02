@@ -121,11 +121,9 @@ boolean Hbridge::speed(int a, int b) {
 boolean Hbridge::setspeed(int cmd) {
 
   if (cmd == 0){
-     tmpSPEED = SPEED + SPEED_STEP;
-     SPEED = tmpSPEED;
+    SPEED = SPEED + SPEED_STEP;
   } else if (cmd == 1) {
-    tmpSPEED = SPEED - SPEED_STEP;
-     SPEED = tmpSPEED;
+    SPEED = SPEED - SPEED_STEP; 
   } else { return false; };
    
   // SPEED limits validation
@@ -134,7 +132,5 @@ boolean Hbridge::setspeed(int cmd) {
   } else if (SPEED < HB_SPEED_MIN) {
     SPEED = HB_SPEED_MIN;
   }
-  tmpSPEED=0; 
-  return SPEED;
 }
  
