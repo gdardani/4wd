@@ -131,6 +131,6 @@ boolean Hbridge::setspeed(int cmd) {
    SPEED = HB_SPEED_MAX;
   } else if (SPEED < HB_SPEED_MIN) {
     SPEED = HB_SPEED_MIN;
-  }
+  } else { speed(SPEED,SPEED); }
 }
  

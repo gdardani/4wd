@@ -71,10 +71,10 @@ class Application:
  def on_key_press_event(self, widget, event):
   self.cmd = gtk.gdk.keyval_name(event.keyval)
   self.conn.set_mov(self.cmd)
-  self.last_cmd = self.cmd
 
  def on_key_release_event(self, widget, event):
-  self.conn.set_mov('q')
+  if gtk.gdk.keyval_name(event.keyval) not in speedctl:
+   self.conn.set_mov("q")
 
  def delete_event(self, widget, event, data=None):
   gtk.main_quit()
