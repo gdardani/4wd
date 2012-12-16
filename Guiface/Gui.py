@@ -40,8 +40,10 @@ class sendCmd:
 
   global bodyctl
   global speedctl
+  global headctl
   bodyctl = {'w': 'w', 's': 's', 'a':'a', 'd':'d','q': 'q'} 
   speedctl = {'Page_Down': 'x','Page_Up': 'z'}
+  headctl = {'Up': 'h', 'Down': 'i', 'Left': 'l', 'Right': 'r'}
 
   try:
    ##time out nao funciona
@@ -59,8 +61,10 @@ class sendCmd:
 
    if mov in speedctl:
     self.bot.write(speedctl[mov])
-    
-  # return True
+
+   if mov in headctl:
+    self.bot.write(headctl[mov])
+
   except Exception as err:
    print "Falha enviar comando: {0}".format(err)
 
@@ -70,10 +74,12 @@ class Application:
 
  def on_key_press_event(self, widget, event):
   self.cmd = gtk.gdk.keyval_name(event.keyval)
+  print self.cmd
   self.conn.set_mov(self.cmd)
 
  def on_key_release_event(self, widget, event):
-  if gtk.gdk.keyval_name(event.keyval) not in speedctl:
+  if gtk.gdk.keyval_name(event.keyval) not in speedctl and gtk.gdk.keyval_name(event.keyval) not in headctl:
+   self.cmd
    self.conn.set_mov("q")
 
  def delete_event(self, widget, event, data=None):

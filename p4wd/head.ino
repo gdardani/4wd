@@ -2,55 +2,55 @@
 // Date: 14/07/2012
 
 #include "head.h"
-#include <Servo.h>
 
-Head::Head(
-  int _srv1,
-  int _srv2)
+Head::Head()
 {
-  pinMode(srv1, OUTPUT);
-  pinMode(srv2, OUTPUT);
-  
-  Servo srv1;
-  Servo srv2;
-  srv1.attach(_srv1);
-  srv2.attach(_srv2);
+//  int vinitpos = 90;
+//  int hinitpos = 90;
+//  int headstep = 2;
 }
 
 // move forward
-boolean Head::hup()
+void Head::hup()
 {
   vinitpos = vinitpos + headstep;
   srv1.write(vinitpos);
+  Serial.print("UP");
+  Serial.println(vinitpos);
 }
 
 // move backward
-void Head::down(int a)
+void Head::hdown()
 {
   vinitpos = vinitpos - headstep;
-  svr1.write(vinitpos);
+  srv1.write(vinitpos);
+  Serial.print("DOWN");
+  Serial.println(vinitpos);
 }
 
 // turn left
-void Head::hleft(int a, int b)
+void Head::hleft()
 {
   hinitpos = hinitpos - headstep;
-  svr2.write(hinitpos);
+  srv2.write(hinitpos);
+  Serial.print("LEFT");
+  Serial.println(hinitpos);
 }
 
 // turn right
-void Head::hright(int a)
+void Head::hright()
 {
-  hinitpos = hinitpos - headstep;
-  svr2.write(hinitpos);
+  hinitpos = hinitpos + headstep;
+  srv2.write(hinitpos);
+  Serial.print("RIGHT");
+  Serial.println(hinitpos);
 }
 
 // stop motors
-boolean Hbridge::hreset()
+void Head::hreset()
 {
-   svr1.write(89);
-   svr2.write(89);
-   return true
+  srv1.write(89);
+  srv2.write(89);
 }
-)
+
 

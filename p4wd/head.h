@@ -4,23 +4,22 @@
 #ifndef D_Head_H
 #define D_Head_H
 
-#include "Arduino.h"
-
 class Head
 {
   private:
-    int vinitpos;
-    int hinitpos;
-    int headstep;
-    int srv1, srv2;
-
+    //int vinitpos;
+    //int hinitpos;
+    //int headstep;
+    //int eng1, eng2;
+    
   public:
 
-    Head(int srv, int srv2);
-    boolean hup();
-    void hdown(int);
-    void hleft(int);
-    void hright(int);
+    Head();
+    void hup();
+    void hdown();
+    void hleft();
+    void hright();
+    void hreset();
 };
 
 #endif
