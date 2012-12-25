@@ -118,19 +118,29 @@ boolean Hbridge::speed(int a, int b) {
   return true;
 }
 
-boolean Hbridge::setspeed(int cmd) {
+boolean Hbridge::setspeed(char speedctl) {
+  
+  switch (speedctl) {
 
-  if (cmd == 0){
-    SPEED = SPEED + SPEED_STEP;
-  } else if (cmd == 1) {
-    SPEED = SPEED - SPEED_STEP; 
-  } else { return false; };
-   
-  // SPEED limits validation
-  if (SPEED > HB_SPEED_MAX){
-   SPEED = HB_SPEED_MAX;
-  } else if (SPEED < HB_SPEED_MIN) {
-    SPEED = HB_SPEED_MIN;
-  } else { speed(SPEED,SPEED); }
+    //speed up
+    case 'up':
+     SPEED = SPEED + SPEED_STEP;
+     //verify max speed value
+     if (SPEED > HB_SPEED_MAX){
+      SPEED = HB_SPEED_MAX;
+     };
+     speed(SPEED,SPEED);
+     break;
+
+    //speed down
+    case 'down':
+     SPEED = SPEED - SPEED_STEP;
+     //verify min speed value
+     if (SPEED < HB_SPEED_MIN) {
+      SPEED = HB_SPEED_MIN;
+     };
+     speed(SPEED,SPEED);
+     break;
+  };
 }
  

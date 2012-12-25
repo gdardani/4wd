@@ -54,12 +54,12 @@ void Run_Cmd(int cmd) {
      
    //bspeed up (z) 
     case 122:
-     hbridge.setspeed(0);
+     hbridge.setspeed('up');
      break;
 
     //bspeed down(x)     
     case 120:
-     hbridge.setspeed(1);
+     hbridge.setspeed('down');
      break;
   };
 };

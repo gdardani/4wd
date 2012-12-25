@@ -22,7 +22,7 @@ class Hbridge
     void backward(int, int);
     void left(int, int);
     void right(int, int);
-    boolean setspeed(int);
+    boolean setspeed(char);
     void stop(void);
     boolean speed(int, int);
 };
