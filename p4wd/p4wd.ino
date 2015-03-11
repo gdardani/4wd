@@ -15,7 +15,7 @@
 #define ENA 10
 #define ENB 11
 #define SRV1 3
-#define SRV2 4
+#define SRV2 5
 
 //min and max engines speed
 int HB_SPEED_MIN = 80;
